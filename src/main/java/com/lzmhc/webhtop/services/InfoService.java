@@ -1,5 +1,6 @@
 package com.lzmhc.webhtop.services;
 
+import com.lzmhc.webhtop.dto.GlobalMemoryDto;
 import com.lzmhc.webhtop.dto.InfoDto;
 import com.lzmhc.webhtop.dto.OperatingSystemDto;
 import com.lzmhc.webhtop.dto.ProcessorDto;
@@ -27,9 +28,9 @@ public class InfoService {
 //        return systemInfo.getHardware().getProcessor();
 //    }
     //      处理器
-    private GlobalMemory getGlobalMemory(){
-        return systemInfo.getHardware().getMemory();
-    }
+//    private GlobalMemory getGlobalMemory(){
+//        return systemInfo.getHardware().getMemory();
+//    }
     //      内存
     private List<PowerSource> getPowerSources(){
         return systemInfo.getHardware().getPowerSources();
@@ -85,10 +86,22 @@ public class InfoService {
         operatingSystemDto.setVersionInfo(operatingSystem.getVersionInfo());
         return operatingSystemDto;
     }
+
+    private GlobalMemoryDto getGlobalMemory(){
+        GlobalMemoryDto globalMemoryDto=new GlobalMemoryDto();
+        GlobalMemory memory = systemInfo.getHardware().getMemory();
+        globalMemoryDto.setAvailable(memory.getAvailable());
+        globalMemoryDto.setPagesize(memory.getPageSize());
+        globalMemoryDto.setPhysicalMemoryList(memory.getPhysicalMemory());
+        globalMemoryDto.setTotal(memory.getTotal());
+        globalMemoryDto.setVirtualMemory(memory.getVirtualMemory());
+        return globalMemoryDto;
+    }
     public InfoDto getInfo() {
         InfoDto infoDto = new InfoDto();
         infoDto.setProcessorDto(this.getProcessor());
         infoDto.setOperatingSystemDto(this.getOperatingSystem());
+        infoDto.setGlobalMemoryDto(this.getGlobalMemory());
         return infoDto;
     }
 }
