@@ -9,12 +9,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping(value = "/api/info")
+@RequestMapping(value = "/info")
 public class InfoController {
     @Autowired
     private InfoService infoService;
     @GetMapping
-    public ResponseEntity<?> getInfo() throws Exception{
+    public ResponseEntity<?> getInfo(){
         return new ResponseEntity<>(infoService.getInfo(), HttpStatus.OK);
     }
 }

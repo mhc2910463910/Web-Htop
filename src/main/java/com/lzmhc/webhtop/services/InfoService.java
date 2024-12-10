@@ -1,6 +1,7 @@
 package com.lzmhc.webhtop.services;
 
 import com.lzmhc.webhtop.dto.InfoDto;
+import com.lzmhc.webhtop.dto.OperatingSystemDto;
 import com.lzmhc.webhtop.dto.ProcessorDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -8,11 +9,45 @@ import oshi.SystemInfo;
 import oshi.hardware.*;
 import oshi.software.os.OperatingSystem;
 import java.util.Arrays;
+import java.util.List;
 
 @Service
 public class InfoService {
     @Autowired
     private SystemInfo systemInfo;
+//    private OperatingSystem getOperatingSystem(){
+//        return systemInfo.getOperatingSystem();
+//    }
+    //        获取操作系统
+    private ComputerSystem getComputerSystem(){
+        return systemInfo.getHardware().getComputerSystem();
+    }
+    //       物理硬件，包括BIOS和主板等
+//    private CentralProcessor getCentralProcessor(){
+//        return systemInfo.getHardware().getProcessor();
+//    }
+    //      处理器
+    private GlobalMemory getGlobalMemory(){
+        return systemInfo.getHardware().getMemory();
+    }
+    //      内存
+    private List<PowerSource> getPowerSources(){
+        return systemInfo.getHardware().getPowerSources();
+    }
+    //      电池
+    private List<HWDiskStore> getDiskStores(){
+        return systemInfo.getHardware().getDiskStores();
+    }
+    //      物理硬盘
+    private Sensors getSensors(){
+        return systemInfo.getHardware().getSensors();
+    }
+    //      CPU温度和风扇转速
+    private List<GraphicsCard> getGraphicsCards(){
+        return systemInfo.getHardware().getGraphicsCards();
+    }
+    //      显卡
+
     private String getConvertedFrequency(long[] hertzArray){
         long totalFrequency = Arrays.stream(hertzArray).sum();
         long hertz = totalFrequency / hertzArray.length;
@@ -39,9 +74,21 @@ public class InfoService {
         processorDto.setBitDepth(BitDepthPrefix+"-bit");
         return processorDto;
     }
-    public InfoDto getInfo() throws Exception{
+
+    private OperatingSystemDto getOperatingSystem(){
+        OperatingSystemDto operatingSystemDto=new OperatingSystemDto();
+        OperatingSystem operatingSystem = systemInfo.getOperatingSystem();
+        operatingSystemDto.setBitness(operatingSystem.getBitness());
+        operatingSystemDto.setFamily(operatingSystemDto.getFamily());
+        operatingSystemDto.setSystemuptime(operatingSystemDto.getSystemuptime());
+        operatingSystemDto.setManufacturer(operatingSystemDto.getManufacturer());
+        operatingSystemDto.setVersionInfo(operatingSystem.getVersionInfo());
+        return operatingSystemDto;
+    }
+    public InfoDto getInfo() {
         InfoDto infoDto = new InfoDto();
-        infoDto.setProcessorDto(getProcessor());
+        infoDto.setProcessorDto(this.getProcessor());
+        infoDto.setOperatingSystemDto(this.getOperatingSystem());
         return infoDto;
     }
 }
