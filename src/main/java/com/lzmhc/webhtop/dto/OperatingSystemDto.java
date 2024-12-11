@@ -13,10 +13,8 @@ public class OperatingSystemDto {
 //    操作系统的位数
     private String manufacturer;
 //    操作系统制造商
-    private long systemuptime;
-//    操作系统启动时间
     private OperatingSystem.OSVersionInfo versionInfo;
 //    操作系统版本信息
-    private long systemboottime;
+    private String systemboottime;
 //    操作Unix启动时间
 }

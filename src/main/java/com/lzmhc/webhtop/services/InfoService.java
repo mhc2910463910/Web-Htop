@@ -6,7 +6,10 @@ import org.springframework.stereotype.Service;
 import oshi.SystemInfo;
 import oshi.hardware.*;
 import oshi.software.os.OperatingSystem;
+
+import java.text.SimpleDateFormat;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -64,13 +67,13 @@ public class InfoService {
         OperatingSystem operatingSystem = systemInfo.getOperatingSystem();
         operatingSystemDto.setBitness(operatingSystem.getBitness());
         operatingSystemDto.setFamily(operatingSystemDto.getFamily());
-        operatingSystemDto.setSystemuptime(operatingSystemDto.getSystemuptime());
         operatingSystemDto.setManufacturer(operatingSystemDto.getManufacturer());
         operatingSystemDto.setVersionInfo(operatingSystem.getVersionInfo());
-        operatingSystemDto.setSystemboottime(operatingSystem.getSystemBootTime());
+        Long timestamp = operatingSystem.getSystemBootTime();
+        String date = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date(timestamp*1000));
+        operatingSystemDto.setSystemboottime(date);
         return operatingSystemDto;
     }
-
     /**
      * Memory info
      * @return

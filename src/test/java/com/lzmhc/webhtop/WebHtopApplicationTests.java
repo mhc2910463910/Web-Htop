@@ -20,11 +20,12 @@ class WebHtopApplicationTests {
     public void getOperatingSystemInfo() {
         InfoDto body = (InfoDto) infoController.getInfo().getBody();
         System.out.println(body.getOperatingSystemDto().getBitness());
-//        操作系统的位数
         System.out.println(body.getOperatingSystemDto().getVersionInfo().getVersion());
         System.out.println(body.getOperatingSystemDto().getVersionInfo().getBuildNumber());
-        System.out.println(body.getOperatingSystemDto().getVersionInfo().getCodeName());
         System.out.println(body.getOperatingSystemDto().getSystemboottime());
+        System.out.println(body.getOperatingSystemDto().getFamily());
+        System.out.println(body.getOperatingSystemDto().getManufacturer());
+
     }
     @Test
     public void getMemoryInfo(){
