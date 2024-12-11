@@ -13,10 +13,7 @@ import java.util.List;
 public class InfoService {
     @Autowired
     private SystemInfo systemInfo;
-    private List<PowerSource> getPowerSources(){
-        return systemInfo.getHardware().getPowerSources();
-    }
-    //      电池
+
     private List<HWDiskStore> getDiskStores(){
         return systemInfo.getHardware().getDiskStores();
     }
@@ -62,6 +59,7 @@ public class InfoService {
     }
 
     private OperatingSystemDto getOperatingSystem(){
+//        操作系统
         OperatingSystemDto operatingSystemDto=new OperatingSystemDto();
         OperatingSystem operatingSystem = systemInfo.getOperatingSystem();
         operatingSystemDto.setBitness(operatingSystem.getBitness());
@@ -74,6 +72,7 @@ public class InfoService {
     }
 
     private GlobalMemoryDto getGlobalMemory(){
+//        全局内存
         GlobalMemoryDto globalMemoryDto=new GlobalMemoryDto();
         GlobalMemory memory = systemInfo.getHardware().getMemory();
         globalMemoryDto.setAvailable(memory.getAvailable());
@@ -85,6 +84,7 @@ public class InfoService {
     }
 
     private ComputerSystemDto getComputerSystem(){
+//        系统硬件信息
         ComputerSystemDto computerSystemDto = new ComputerSystemDto();
         ComputerSystem computerSystem = systemInfo.getHardware().getComputerSystem();
         computerSystemDto.setBaseboard(computerSystem.getBaseboard());
@@ -93,13 +93,17 @@ public class InfoService {
         computerSystemDto.setSerialNumber(computerSystem.getSerialNumber());
         return computerSystemDto;
     }
-    //       物理硬件，包括BIOS和主板等
+//    private List<PowerSource> getPowerSources(){
+//        return systemInfo.getHardware().getPowerSources();
+//    }
+    //      电池
     public InfoDto getInfo() {
         InfoDto infoDto = new InfoDto();
         infoDto.setProcessorDto(this.getProcessor());
         infoDto.setOperatingSystemDto(this.getOperatingSystem());
         infoDto.setGlobalMemoryDto(this.getGlobalMemory());
         infoDto.setComputerSystemDto(this.getComputerSystem());
+        infoDto.setPowerSourceList(systemInfo.getHardware().getPowerSources());
         return infoDto;
     }
 }

@@ -3,6 +3,9 @@ package com.lzmhc.webhtop.dto;
 import lombok.Getter;
 import lombok.Setter;
 import oshi.hardware.GlobalMemory;
+import oshi.hardware.PowerSource;
+
+import java.util.List;
 
 @Getter
 @Setter
@@ -15,4 +18,6 @@ public class InfoDto {
 //    操作系统
     private GlobalMemoryDto globalMemoryDto;
 //    内存
+    private List<PowerSource> powerSourceList;
+//    电池
 }

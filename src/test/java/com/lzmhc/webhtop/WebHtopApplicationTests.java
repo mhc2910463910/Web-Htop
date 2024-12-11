@@ -55,5 +55,10 @@ class WebHtopApplicationTests {
         System.out.println(body.getComputerSystemDto().getManufacturer());
         System.out.println(body.getComputerSystemDto().getSerialNumber());
     }
+    @Test
+    public void getPowerSourcesInfo(){
+        InfoDto body = (InfoDto) infoController.getInfo().getBody();
+        System.out.println(body.getPowerSourceList());
+    }
 
 }
