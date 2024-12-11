@@ -84,6 +84,7 @@ public class InfoService {
         operatingSystemDto.setSystemuptime(operatingSystemDto.getSystemuptime());
         operatingSystemDto.setManufacturer(operatingSystemDto.getManufacturer());
         operatingSystemDto.setVersionInfo(operatingSystem.getVersionInfo());
+        operatingSystemDto.setSystemboottime(operatingSystem.getSystemBootTime());
         return operatingSystemDto;
     }
 
