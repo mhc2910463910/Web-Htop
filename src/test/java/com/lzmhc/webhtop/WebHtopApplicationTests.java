@@ -19,23 +19,18 @@ class WebHtopApplicationTests {
     @Test
     public void getOperatingSystemInfo() {
         InfoDto body = (InfoDto) infoController.getInfo().getBody();
+        System.out.println(body.getOperatingSystemDto().getFamily());
         System.out.println(body.getOperatingSystemDto().getBitness());
         System.out.println(body.getOperatingSystemDto().getVersionInfo().getVersion());
         System.out.println(body.getOperatingSystemDto().getVersionInfo().getBuildNumber());
         System.out.println(body.getOperatingSystemDto().getSystemboottime());
-        System.out.println(body.getOperatingSystemDto().getFamily());
-        System.out.println(body.getOperatingSystemDto().getManufacturer());
-
     }
     @Test
     public void getMemoryInfo(){
         InfoDto body=(InfoDto) infoController.getInfo().getBody();
-        System.out.println((double) (body.getGlobalMemoryDto().getAvailable()/1024.0/1024.0/1024.0) + " GB");
-//        System.out.println(body.getGlobalMemoryDto().getPhysicalMemoryList());
-//        需要root权限
+        System.out.println((body.getGlobalMemoryDto().getAvailable()) + " GB");
+        System.out.println((body.getGlobalMemoryDto().getTotal()) +" GB");
         System.out.println(body.getGlobalMemoryDto().getVirtualMemory());
-        System.out.println((double)(body.getGlobalMemoryDto().getPagesize()/1024.0) +" KB");
-        System.out.println((double)(body.getGlobalMemoryDto().getTotal()/1024.0/1024.0/1024.0) +" GB");
     }
 
     @Test

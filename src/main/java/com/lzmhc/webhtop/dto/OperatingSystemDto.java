@@ -11,8 +11,6 @@ public class OperatingSystemDto {
 //    系统家族
     private int bitness;
 //    操作系统的位数
-    private String manufacturer;
-//    操作系统制造商
     private OperatingSystem.OSVersionInfo versionInfo;
 //    操作系统版本信息
     private String systemboottime;

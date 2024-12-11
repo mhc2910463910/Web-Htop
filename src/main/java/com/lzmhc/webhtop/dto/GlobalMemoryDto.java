@@ -10,14 +10,10 @@ import java.util.List;
 @Getter
 @Setter
 public class GlobalMemoryDto {
-    private long available;
+    private String available;
 //    可用内存
-    private long pagesize;
-//    字节数
-    private List<PhysicalMemory> physicalMemoryList;
+    private String total;
 //    物理内存
-    private long total;
-//    实际物理内存
     private VirtualMemory virtualMemory;
 //    虚拟内存
 }

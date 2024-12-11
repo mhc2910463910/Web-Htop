@@ -67,7 +67,6 @@ public class InfoService {
         OperatingSystem operatingSystem = systemInfo.getOperatingSystem();
         operatingSystemDto.setBitness(operatingSystem.getBitness());
         operatingSystemDto.setFamily(operatingSystemDto.getFamily());
-        operatingSystemDto.setManufacturer(operatingSystemDto.getManufacturer());
         operatingSystemDto.setVersionInfo(operatingSystem.getVersionInfo());
         Long timestamp = operatingSystem.getSystemBootTime();
         String date = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date(timestamp*1000));
@@ -82,10 +81,10 @@ public class InfoService {
 //        全局内存
         GlobalMemoryDto globalMemoryDto=new GlobalMemoryDto();
         GlobalMemory memory = systemInfo.getHardware().getMemory();
-        globalMemoryDto.setAvailable(memory.getAvailable());
-        globalMemoryDto.setPagesize(memory.getPageSize());
-        globalMemoryDto.setPhysicalMemoryList(memory.getPhysicalMemory());
-        globalMemoryDto.setTotal(memory.getTotal());
+        double availabel = memory.getAvailable()/1024.0/1024.0/1024.0;
+        globalMemoryDto.setAvailable(String.format("%.2f",availabel));
+        double total = memory.getTotal()/1024.0/1024.0/1024.0;
+        globalMemoryDto.setTotal(String.format("%.2f", total));
         globalMemoryDto.setVirtualMemory(memory.getVirtualMemory());
         return globalMemoryDto;
     }
