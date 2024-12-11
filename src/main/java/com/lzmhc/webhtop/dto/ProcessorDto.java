@@ -2,6 +2,10 @@ package com.lzmhc.webhtop.dto;
 
 import lombok.Getter;
 import lombok.Setter;
+import oshi.hardware.GraphicsCard;
+import oshi.hardware.Sensors;
+
+import java.util.List;
 
 @Setter
 @Getter
@@ -25,5 +29,17 @@ public class ProcessorDto {
         private String bitDepth;
         /**
          * 位
+         */
+        private String sensorsVoltage;
+        /**
+         * CPU电压
+         */
+        private String sensoresTemperature;
+        /**
+         * CPU温度
+         */
+        private List<String> sensoresSpeedList;
+        /**
+         * 风扇速度
          */
 }

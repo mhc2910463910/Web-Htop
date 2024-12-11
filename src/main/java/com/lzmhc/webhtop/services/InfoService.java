@@ -8,10 +8,7 @@ import oshi.hardware.*;
 import oshi.software.os.OperatingSystem;
 
 import java.text.SimpleDateFormat;
-import java.util.Arrays;
-import java.util.Date;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @Service
 public class InfoService {
@@ -45,6 +42,9 @@ public class InfoService {
      */
     private ProcessorDto getProcessor(){
         ProcessorDto processorDto = new ProcessorDto();
+        /**
+         * cpu数据
+         */
         CentralProcessor centralProcessor = systemInfo.getHardware().getProcessor();
         CentralProcessor.ProcessorIdentifier processorIdentifier = centralProcessor.getProcessorIdentifier();
         String name = processorIdentifier.getName();
@@ -55,6 +55,20 @@ public class InfoService {
         processorDto.setCurrentFreq(getConvertedFrequency(centralProcessor.getCurrentFreq()));
         String BitDepthPrefix = processorIdentifier.isCpu64bit()?"64":"32";
         processorDto.setBitDepth(BitDepthPrefix+"-bit");
+        /**
+         * cpu温度和风扇速度
+         */
+        Sensors sensors = systemInfo.getHardware().getSensors();
+        String voltage = String.format("%.2f",sensors.getCpuVoltage());
+        String temperature = String.format("%.2f",sensors.getCpuTemperature());
+        processorDto.setSensoresTemperature(temperature+" 摄氏度");
+        processorDto.setSensorsVoltage(voltage+" V");
+        int[] fanSpeeds = sensors.getFanSpeeds();
+        List<String> speedList = new ArrayList<>();
+        for( int speed : fanSpeeds){
+            speedList.add(String.valueOf(speed)+"rpm");
+        }
+        processorDto.setSensoresSpeedList(speedList);
         return processorDto;
     }
     /**
@@ -93,7 +107,6 @@ public class InfoService {
         globalMemoryDto.setVirtuallMemory(String.format("%.2f", virtualMemory));
         return globalMemoryDto;
     }
-
     /**
      * BIOS info
      * @return
@@ -113,7 +126,6 @@ public class InfoService {
         computerSystemDto.setRelease_date(releaseDate);
         return computerSystemDto;
     }
-
     /**
      * Storage info
      * @param bits
@@ -137,7 +149,6 @@ public class InfoService {
             return Math.round(bits / 1.049E+6) + " MiB";
         }
     }
-
     /**
      * Storage info
      * @return
@@ -162,15 +173,11 @@ public class InfoService {
         storageDto.setDiskCount(diskCount+((diskCount>1)? "Disks":"Disk"));
         return storageDto;
     }
-
-    private Sensors getSensors(){
-        return systemInfo.getHardware().getSensors();
-    }
-    //      CPU温度和风扇转速
-    private List<GraphicsCard> getGraphicsCards(){
-        return systemInfo.getHardware().getGraphicsCards();
-    }
-    //      显卡
+    
+//    private List<GraphicsCard> getGraphicsCards(){
+//        return systemInfo.getHardware().getGraphicsCards();
+//    }
+//    //      显卡
     public InfoDto getInfo() {
         InfoDto infoDto = new InfoDto();
         infoDto.setProcessorDto(this.getProcessor());

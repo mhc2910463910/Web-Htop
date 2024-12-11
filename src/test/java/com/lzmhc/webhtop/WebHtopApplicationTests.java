@@ -43,6 +43,9 @@ class WebHtopApplicationTests {
         System.out.println("当前频率："+body.getProcessorDto().getCurrentFreq());
         System.out.println("最大频率: "+body.getProcessorDto().getMaxFreq());
         System.out.println("处理器: "+body.getProcessorDto().getName());
+        System.out.println("CPU温度: "+body.getProcessorDto().getSensoresTemperature());
+        System.out.println("CPU电压: "+body.getProcessorDto().getSensorsVoltage());
+        System.out.println("风扇速度: "+body.getProcessorDto().getSensoresSpeedList());
     }
     @Test
     public void getComputerSystemInfo(){
