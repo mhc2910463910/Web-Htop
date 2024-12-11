@@ -61,9 +61,8 @@ class WebHtopApplicationTests {
     @Test
     public void getStorageInfo(){
         InfoDto body = (InfoDto) infoController.getInfo().getBody();
-        System.out.println(body.getStorageDto().getMainStorage());
-        System.out.println(body.getStorageDto().getDiskCount());
-        System.out.println(body.getStorageDto().getTotal());
-        System.out.println(body.getStorageDto().getSwapAmount());
+        System.out.println("磁盘模型: "+body.getStorageDto().getMainStorage());
+        System.out.println("磁盘数量: "+body.getStorageDto().getDiskCount());
+        System.out.println("磁盘空间: "+body.getStorageDto().getTotal());
     }
 }

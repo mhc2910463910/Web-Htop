@@ -8,9 +8,14 @@ import lombok.Setter;
 public class StorageDto {
     private String mainStorage;
     /**
-     *
+     * 磁盘模型
      */
     private String total;
+    /**
+     * 磁盘空间
+     */
     private String diskCount;
-    private String swapAmount;
+    /**
+     * 磁盘数量
+     */
 }

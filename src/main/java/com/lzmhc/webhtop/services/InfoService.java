@@ -144,11 +144,9 @@ public class InfoService {
      */
     private StorageDto getStorage(){
         StorageDto storageDto = new StorageDto();
-
         List<HWDiskStore> hwDiskStoreList = systemInfo.getHardware().getDiskStores();
-        GlobalMemory globalMemory=systemInfo.getHardware().getMemory();
-
-        Optional<HWDiskStore> hwDiskStoreOptional=hwDiskStoreList.stream().findFirst();
+//        Optional<HWDiskStore> hwDiskStoreOptional=hwDiskStoreList.stream().findFirst();
+        Optional<HWDiskStore> hwDiskStoreOptional= Optional.ofNullable(hwDiskStoreList.get(hwDiskStoreList.size()-1));
         if(hwDiskStoreOptional.isPresent()){
             String mainStorage=hwDiskStoreOptional.get().getModel();
             if(mainStorage.contains("(Standard disk drives)")){
@@ -158,12 +156,10 @@ public class InfoService {
         }else{
             storageDto.setMainStorage("Undefined");
         }
-
         long total = hwDiskStoreList.stream().mapToLong(HWDiskStore::getSize).sum();
         storageDto.setTotal(getConvertedCapacity(total)+" Total");
         int diskCount = hwDiskStoreList.size();
         storageDto.setDiskCount(diskCount+((diskCount>1)? "Disks":"Disk"));
-        storageDto.setSwapAmount(getConvertedCapacity(globalMemory.getVirtualMemory().getSwapTotal())+" Swap");
         return storageDto;
     }
 
