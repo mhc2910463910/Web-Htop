@@ -19,36 +19,38 @@ class WebHtopApplicationTests {
     @Test
     public void getOperatingSystemInfo() {
         InfoDto body = (InfoDto) infoController.getInfo().getBody();
-        System.out.println(body.getOperatingSystemDto().getFamily());
-        System.out.println(body.getOperatingSystemDto().getBitness());
-        System.out.println(body.getOperatingSystemDto().getVersionInfo().getVersion());
-        System.out.println(body.getOperatingSystemDto().getVersionInfo().getBuildNumber());
-        System.out.println(body.getOperatingSystemDto().getSystemboottime());
+        System.out.println("操作系统: "+body.getOperatingSystemDto().getFamily());
+        System.out.println("位数: "+body.getOperatingSystemDto().getBitness());
+        System.out.println("版本: "+body.getOperatingSystemDto().getVersionInfo().getVersion());
+        System.out.println("操作系统版本号: "+body.getOperatingSystemDto().getVersionInfo().getBuildNumber());
+        System.out.println("开机时间: "+body.getOperatingSystemDto().getSystemboottime());
     }
     @Test
     public void getMemoryInfo(){
         InfoDto body=(InfoDto) infoController.getInfo().getBody();
-        System.out.println((body.getGlobalMemoryDto().getAvailable()) + " GB");
-        System.out.println((body.getGlobalMemoryDto().getTotal()) +" GB");
-        System.out.println(body.getGlobalMemoryDto().getVirtualMemory());
+        System.out.println("物理内存: "+body.getGlobalMemoryDto().getTotalMemory() +" GB");
+        System.out.println("可用物理内存: "+body.getGlobalMemoryDto().getAvailableMemory() + " GB");
+        System.out.println("已用物理内存: "+body.getGlobalMemoryDto().getUsedMemory() + " GB");
+        System.out.println("虚拟内存: "+body.getGlobalMemoryDto().getVirtuallMemory()+" GB");
+        System.out.println("已用虚拟内存: "+body.getGlobalMemoryDto().getVirtualUsedMemory()+" GB");
     }
 
     @Test
     public void getProcessorInfo(){
         InfoDto body=(InfoDto) infoController.getInfo().getBody();
-        System.out.println(body.getProcessorDto().getBitDepth());
-        System.out.println(body.getProcessorDto().getCoreCount());
-        System.out.println(body.getProcessorDto().getCurrentFreq());
-        System.out.println(body.getProcessorDto().getMaxFreq());
-        System.out.println(body.getProcessorDto().getName());
+        System.out.println("位数: "+body.getProcessorDto().getBitDepth());
+        System.out.println("CPU核心: "+body.getProcessorDto().getCoreCount());
+        System.out.println("当前频率："+body.getProcessorDto().getCurrentFreq());
+        System.out.println("最大频率: "+body.getProcessorDto().getMaxFreq());
+        System.out.println("处理器: "+body.getProcessorDto().getName());
     }
     @Test
     public void getComputerSystemInfo(){
         InfoDto body = (InfoDto) infoController.getInfo().getBody();
-        System.out.println(body.getComputerSystemDto().getManufacturer());
-        System.out.println(body.getComputerSystemDto().getModel());
-        System.out.println(body.getComputerSystemDto().getVersion());
-        System.out.println(body.getComputerSystemDto().getRelease_date());
+        System.out.println("制造商: "+body.getComputerSystemDto().getManufacturer());
+        System.out.println("产品名称: "+body.getComputerSystemDto().getModel());
+        System.out.println("BIOS版本: "+body.getComputerSystemDto().getVersion());
+        System.out.println("发布时间: "+body.getComputerSystemDto().getRelease_date());
 
     }
     @Test

@@ -10,10 +10,24 @@ import java.util.List;
 @Getter
 @Setter
 public class GlobalMemoryDto {
-    private String available;
-//    可用内存
-    private String total;
-//    物理内存
-    private VirtualMemory virtualMemory;
-//    虚拟内存
+    private String availableMemory;
+    /**
+     * 可用物理内存
+     */
+    private String usedMemory;
+    /**
+     * 已用物理内存
+     */
+    private String totalMemory;
+    /**
+     * 物理内存
+     */
+    private String virtualUsedMemory;
+    /**
+     * 已用虚拟内存
+     */
+    private String virtuallMemory;
+    /**
+     * 虚拟内存
+     */
 }

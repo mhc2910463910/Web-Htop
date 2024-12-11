@@ -82,10 +82,15 @@ public class InfoService {
         GlobalMemoryDto globalMemoryDto=new GlobalMemoryDto();
         GlobalMemory memory = systemInfo.getHardware().getMemory();
         double availabel = memory.getAvailable()/1024.0/1024.0/1024.0;
-        globalMemoryDto.setAvailable(String.format("%.2f",availabel));
+        globalMemoryDto.setAvailableMemory(String.format("%.2f",availabel));
         double total = memory.getTotal()/1024.0/1024.0/1024.0;
-        globalMemoryDto.setTotal(String.format("%.2f", total));
-        globalMemoryDto.setVirtualMemory(memory.getVirtualMemory());
+        globalMemoryDto.setTotalMemory(String.format("%.2f", total));
+        double used = total-availabel;
+        globalMemoryDto.setUsedMemory(String.format("%.2f", used));
+        double virtualUsedMemory=memory.getVirtualMemory().getSwapUsed()/1024.0/1024.0/1024.0;
+        globalMemoryDto.setVirtualUsedMemory(String.format("%.2f", virtualUsedMemory));
+        double virtualMemory=memory.getVirtualMemory().getSwapTotal()/1024.0/1024.0/1024.0;
+        globalMemoryDto.setVirtuallMemory(String.format("%.2f", virtualMemory));
         return globalMemoryDto;
     }
 
