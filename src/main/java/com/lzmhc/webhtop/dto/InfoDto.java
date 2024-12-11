@@ -19,5 +19,11 @@ public class InfoDto {
     private GlobalMemoryDto globalMemoryDto;
 //    内存
     private List<PowerSource> powerSourceList;
-//    电池
+    /**
+     *电池
+     */
+    private StorageDto storageDto;
+    /**
+     * 存储
+     */
 }

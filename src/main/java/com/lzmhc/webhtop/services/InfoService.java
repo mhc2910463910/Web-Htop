@@ -8,16 +8,13 @@ import oshi.hardware.*;
 import oshi.software.os.OperatingSystem;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class InfoService {
     @Autowired
     private SystemInfo systemInfo;
 
-    private List<HWDiskStore> getDiskStores(){
-        return systemInfo.getHardware().getDiskStores();
-    }
-    //      物理硬盘
     private Sensors getSensors(){
         return systemInfo.getHardware().getSensors();
     }
@@ -93,10 +90,49 @@ public class InfoService {
         computerSystemDto.setSerialNumber(computerSystem.getSerialNumber());
         return computerSystemDto;
     }
-//    private List<PowerSource> getPowerSources(){
-//        return systemInfo.getHardware().getPowerSources();
-//    }
-    //      电池
+
+    private String getConvertedCapacity(long bits)
+    {
+        if ((bits / 1.049E+6) > 999)
+        {
+            if ((bits / 1.074E+9) > 999)
+            {
+                return (Math.round((bits / 1.1E+12) * 10.0) / 10.0) + " TiB";
+            }
+            else
+            {
+                return Math.round(bits / 1.074E+9) + " GiB";
+            }
+        }
+        else
+        {
+            return Math.round(bits / 1.049E+6) + " MiB";
+        }
+    }
+    private StorageDto getStorage(){
+        StorageDto storageDto = new StorageDto();
+
+        List<HWDiskStore> hwDiskStoreList = systemInfo.getHardware().getDiskStores();
+        GlobalMemory globalMemory=systemInfo.getHardware().getMemory();
+
+        Optional<HWDiskStore> hwDiskStoreOptional=hwDiskStoreList.stream().findFirst();
+        if(hwDiskStoreOptional.isPresent()){
+            String mainStorage=hwDiskStoreOptional.get().getModel();
+            if(mainStorage.contains("(Standard disk drives)")){
+                mainStorage=mainStorage.substring(0, mainStorage.indexOf("(Standard disk drives)")-1);
+            }
+            storageDto.setMainStorage(mainStorage.trim());
+        }else{
+            storageDto.setMainStorage("Undefined");
+        }
+
+        long total = hwDiskStoreList.stream().mapToLong(HWDiskStore::getSize).sum();
+        storageDto.setTotal(getConvertedCapacity(total)+" Total");
+        int diskCount = hwDiskStoreList.size();
+        storageDto.setDiskCount(diskCount+((diskCount>1)? "Disks":"Disk"));
+        storageDto.setSwapAmount(getConvertedCapacity(globalMemory.getVirtualMemory().getSwapTotal())+" Swap");
+        return storageDto;
+    }
     public InfoDto getInfo() {
         InfoDto infoDto = new InfoDto();
         infoDto.setProcessorDto(this.getProcessor());
@@ -104,6 +140,7 @@ public class InfoService {
         infoDto.setGlobalMemoryDto(this.getGlobalMemory());
         infoDto.setComputerSystemDto(this.getComputerSystem());
         infoDto.setPowerSourceList(systemInfo.getHardware().getPowerSources());
+        infoDto.setStorageDto(this.getStorage());
         return infoDto;
     }
 }
