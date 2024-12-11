@@ -131,8 +131,7 @@ public class InfoService {
      * @param bits
      * @return
      */
-    private String getConvertedCapacity(long bits)
-    {
+    private String getConvertedCapacity(long bits) {
         if ((bits / 1.049E+6) > 999)
         {
             if ((bits / 1.074E+9) > 999)
@@ -185,6 +184,16 @@ public class InfoService {
         List<GraphicsCard> graphicsCards = systemInfo.getHardware().getGraphicsCards();
         graphicsCardDto.setGraphicsCardList(graphicsCards);
         return graphicsCardDto;
+    }
+
+    /**
+     * Power info
+     * @return
+     */
+    private PowerDto getPowerSource(){
+        PowerDto powerDto = new PowerDto();
+        List<PowerSource> powerSources = systemInfo.getHardware().getPowerSources();
+        return powerDto;
     }
     public InfoDto getInfo() {
         InfoDto infoDto = new InfoDto();
