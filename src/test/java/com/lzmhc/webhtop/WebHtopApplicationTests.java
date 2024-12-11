@@ -50,10 +50,11 @@ class WebHtopApplicationTests {
     @Test
     public void getComputerSystemInfo(){
         InfoDto body = (InfoDto) infoController.getInfo().getBody();
-        System.out.println(body.getComputerSystemDto().getBaseboard());
-        System.out.println(body.getComputerSystemDto().getFirmware());
         System.out.println(body.getComputerSystemDto().getManufacturer());
-        System.out.println(body.getComputerSystemDto().getSerialNumber());
+        System.out.println(body.getComputerSystemDto().getModel());
+        System.out.println(body.getComputerSystemDto().getVersion());
+        System.out.println(body.getComputerSystemDto().getRelease_date());
+
     }
     @Test
     public void getPowerSourcesInfo(){

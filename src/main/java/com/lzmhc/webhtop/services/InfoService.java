@@ -14,16 +14,6 @@ import java.util.Optional;
 public class InfoService {
     @Autowired
     private SystemInfo systemInfo;
-
-    private Sensors getSensors(){
-        return systemInfo.getHardware().getSensors();
-    }
-    //      CPU温度和风扇转速
-    private List<GraphicsCard> getGraphicsCards(){
-        return systemInfo.getHardware().getGraphicsCards();
-    }
-    //      显卡
-
     private String getConvertedFrequency(long[] hertzArray){
         long totalFrequency = Arrays.stream(hertzArray).sum();
         long hertz = totalFrequency / hertzArray.length;
@@ -80,17 +70,31 @@ public class InfoService {
         return globalMemoryDto;
     }
 
+    /**
+     * BIOS info
+     * @return
+     */
     private ComputerSystemDto getComputerSystem(){
-//        系统硬件信息
         ComputerSystemDto computerSystemDto = new ComputerSystemDto();
         ComputerSystem computerSystem = systemInfo.getHardware().getComputerSystem();
-        computerSystemDto.setBaseboard(computerSystem.getBaseboard());
-        computerSystemDto.setFirmware(computerSystem.getFirmware());
-        computerSystemDto.setManufacturer(computerSystem.getManufacturer());
-        computerSystemDto.setSerialNumber(computerSystem.getSerialNumber());
+        Baseboard baseboard = computerSystem.getBaseboard();
+        String manufacturer = baseboard.getManufacturer();
+        String model = baseboard.getModel();
+        Firmware firmware = computerSystem.getFirmware();
+        String version = firmware.getVersion();
+        String releaseDate = firmware.getReleaseDate();
+        computerSystemDto.setManufacturer(manufacturer);
+        computerSystemDto.setModel(model);
+        computerSystemDto.setVersion(version);
+        computerSystemDto.setRelease_date(releaseDate);
         return computerSystemDto;
     }
 
+    /**
+     * Storage info
+     * @param bits
+     * @return
+     */
     private String getConvertedCapacity(long bits)
     {
         if ((bits / 1.049E+6) > 999)
@@ -133,6 +137,15 @@ public class InfoService {
         storageDto.setSwapAmount(getConvertedCapacity(globalMemory.getVirtualMemory().getSwapTotal())+" Swap");
         return storageDto;
     }
+
+    private Sensors getSensors(){
+        return systemInfo.getHardware().getSensors();
+    }
+    //      CPU温度和风扇转速
+    private List<GraphicsCard> getGraphicsCards(){
+        return systemInfo.getHardware().getGraphicsCards();
+    }
+    //      显卡
     public InfoDto getInfo() {
         InfoDto infoDto = new InfoDto();
         infoDto.setProcessorDto(this.getProcessor());

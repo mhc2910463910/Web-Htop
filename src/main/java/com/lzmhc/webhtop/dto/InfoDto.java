@@ -11,16 +11,24 @@ import java.util.List;
 @Setter
 public class InfoDto {
     private ComputerSystemDto computerSystemDto;
-//    物理硬件
+    /**
+     * 物理硬件
+     */
     private ProcessorDto processorDto;
-//    处理器
+    /**
+     * 处理器
+     */
     private OperatingSystemDto operatingSystemDto;
-//    操作系统
+    /**
+     * 操作系统
+     */
     private GlobalMemoryDto globalMemoryDto;
-//    内存
+    /**
+     * 内存
+     */
     private List<PowerSource> powerSourceList;
     /**
-     *电池
+     * 电池
      */
     private StorageDto storageDto;
     /**

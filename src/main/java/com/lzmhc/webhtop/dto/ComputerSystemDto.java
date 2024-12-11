@@ -8,12 +8,20 @@ import oshi.hardware.Firmware;
 @Getter
 @Setter
 public class ComputerSystemDto {
-    private Baseboard baseboard;
-//    底板/主板
-    private Firmware firmware;
-//    系统固件
     private String manufacturer;
-//    系统制造商
-    private String serialNumber;
-//    系统序列号
+    /**
+     * BIOS制造商
+     */
+    private String model;
+    /**
+     * 产品名称
+     */
+    private String version;
+    /**
+     * 版本
+     */
+    private String release_date;
+    /**
+     * 发布日期
+     */
 }
