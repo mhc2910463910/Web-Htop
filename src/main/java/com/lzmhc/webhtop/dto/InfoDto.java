@@ -34,4 +34,8 @@ public class InfoDto {
     /**
      * 存储
      */
+    private GraphicsCardDto graphicsCardDto;
+    /**
+     * 显卡
+     */
 }

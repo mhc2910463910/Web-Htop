@@ -8,6 +8,9 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
+import oshi.hardware.GraphicsCard;
+
+import java.util.List;
 
 @RunWith(SpringRunner.class)
 //测试运行器，并加载SpringBoot测试注解
@@ -67,5 +70,16 @@ class WebHtopApplicationTests {
         System.out.println("磁盘模型: "+body.getStorageDto().getMainStorage());
         System.out.println("磁盘数量: "+body.getStorageDto().getDiskCount());
         System.out.println("磁盘空间: "+body.getStorageDto().getTotal());
+    }
+    @Test
+    public void getGraphicsCardsInfo(){
+        InfoDto body = (InfoDto) infoController.getInfo().getBody();
+        List<GraphicsCard> graphicsCardList = body.getGraphicsCardDto().getGraphicsCardList();
+        for( GraphicsCard graphicsCard: graphicsCardList){
+            System.out.println("显卡名称: "+graphicsCard.getName());
+            System.out.println("供应商: "+graphicsCard.getVendor());
+            System.out.println("显存: "+graphicsCard.getVRam());
+        }
+
     }
 }

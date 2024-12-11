@@ -173,11 +173,17 @@ public class InfoService {
         storageDto.setDiskCount(diskCount+((diskCount>1)? "Disks":"Disk"));
         return storageDto;
     }
-    
-//    private List<GraphicsCard> getGraphicsCards(){
-//        return systemInfo.getHardware().getGraphicsCards();
-//    }
-//    //      显卡
+
+    /**
+     * 显卡
+     * @return
+     */
+    private GraphicsCardDto getGraphicsCards(){
+        GraphicsCardDto graphicsCardDto = new GraphicsCardDto();
+        List<GraphicsCard> graphicsCards = systemInfo.getHardware().getGraphicsCards();
+        graphicsCardDto.setGraphicsCardList(graphicsCards);
+        return graphicsCardDto;
+    }
     public InfoDto getInfo() {
         InfoDto infoDto = new InfoDto();
         infoDto.setProcessorDto(this.getProcessor());
@@ -186,6 +192,7 @@ public class InfoService {
         infoDto.setComputerSystemDto(this.getComputerSystem());
         infoDto.setPowerSourceList(systemInfo.getHardware().getPowerSources());
         infoDto.setStorageDto(this.getStorage());
+        infoDto.setGraphicsCardDto(this.getGraphicsCards());
         return infoDto;
     }
 }
