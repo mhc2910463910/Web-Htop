@@ -1,9 +1,6 @@
 package com.lzmhc.webhtop.services;
 
-import com.lzmhc.webhtop.dto.GlobalMemoryDto;
-import com.lzmhc.webhtop.dto.InfoDto;
-import com.lzmhc.webhtop.dto.OperatingSystemDto;
-import com.lzmhc.webhtop.dto.ProcessorDto;
+import com.lzmhc.webhtop.dto.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import oshi.SystemInfo;
@@ -16,22 +13,6 @@ import java.util.List;
 public class InfoService {
     @Autowired
     private SystemInfo systemInfo;
-//    private OperatingSystem getOperatingSystem(){
-//        return systemInfo.getOperatingSystem();
-//    }
-    //        获取操作系统
-    private ComputerSystem getComputerSystem(){
-        return systemInfo.getHardware().getComputerSystem();
-    }
-    //       物理硬件，包括BIOS和主板等
-//    private CentralProcessor getCentralProcessor(){
-//        return systemInfo.getHardware().getProcessor();
-//    }
-    //      处理器
-//    private GlobalMemory getGlobalMemory(){
-//        return systemInfo.getHardware().getMemory();
-//    }
-    //      内存
     private List<PowerSource> getPowerSources(){
         return systemInfo.getHardware().getPowerSources();
     }
@@ -61,17 +42,21 @@ public class InfoService {
     private ProcessorDto getProcessor(){
         ProcessorDto processorDto = new ProcessorDto();
         CentralProcessor centralProcessor = systemInfo.getHardware().getProcessor();
-        String name = centralProcessor.getProcessorIdentifier().getProcessorID();
-        if(name.contains("@")){
-            name = name.substring(0, name.indexOf('@')-1);
-        }
+        CentralProcessor.ProcessorIdentifier processorIdentifier = centralProcessor.getProcessorIdentifier();
+        String name = processorIdentifier.getProcessorID()+"_"
+                +processorIdentifier.getName()+"_"
+                +processorIdentifier.getVendor();
+//        CPU的标识符
+//        if(name.contains("@")){
+//            name = name.substring(0, name.indexOf('@')-1);
+//        }
         processorDto.setName(name.trim());
-
         int coreCount = centralProcessor.getLogicalProcessorCount();
-        processorDto.setCoreCount(coreCount+((coreCount>1)?"Cores":"Core"));
-        processorDto.setClockSpeed(getConvertedFrequency(centralProcessor.getCurrentFreq()));
-
-        String BitDepthPrefix = centralProcessor.getProcessorIdentifier().isCpu64bit()?"64":"32";
+//        可用于处理的CPU数量
+        processorDto.setCoreCount(coreCount);
+        processorDto.setMaxFreq(centralProcessor.getMaxFreq());
+        processorDto.setCurrentFreq(getConvertedFrequency(centralProcessor.getCurrentFreq()));
+        String BitDepthPrefix = processorIdentifier.isCpu64bit()?"64":"32";
         processorDto.setBitDepth(BitDepthPrefix+"-bit");
         return processorDto;
     }
@@ -98,11 +83,23 @@ public class InfoService {
         globalMemoryDto.setVirtualMemory(memory.getVirtualMemory());
         return globalMemoryDto;
     }
+
+    private ComputerSystemDto getComputerSystem(){
+        ComputerSystemDto computerSystemDto = new ComputerSystemDto();
+        ComputerSystem computerSystem = systemInfo.getHardware().getComputerSystem();
+        computerSystemDto.setBaseboard(computerSystem.getBaseboard());
+        computerSystemDto.setFirmware(computerSystem.getFirmware());
+        computerSystemDto.setManufacturer(computerSystem.getManufacturer());
+        computerSystemDto.setSerialNumber(computerSystem.getSerialNumber());
+        return computerSystemDto;
+    }
+    //       物理硬件，包括BIOS和主板等
     public InfoDto getInfo() {
         InfoDto infoDto = new InfoDto();
         infoDto.setProcessorDto(this.getProcessor());
         infoDto.setOperatingSystemDto(this.getOperatingSystem());
         infoDto.setGlobalMemoryDto(this.getGlobalMemory());
+        infoDto.setComputerSystemDto(this.getComputerSystem());
         return infoDto;
     }
 }

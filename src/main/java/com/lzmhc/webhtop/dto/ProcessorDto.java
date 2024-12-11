@@ -8,10 +8,14 @@ import lombok.Setter;
 public class ProcessorDto {
         private String name;
 //        名称
-        private String coreCount;
-//        核心数
-        private String clockSpeed;
-//        时钟速度
+        private int coreCount;
+//        可用于处理的逻辑CPU核心数
+        private int physicalProcessorCount;
+//        物理CPU核心数
+        private long maxFreq;
+//        最大频率
+        private String currentFreq;
+//        当前频率
         private String bitDepth;
 //        位
 }

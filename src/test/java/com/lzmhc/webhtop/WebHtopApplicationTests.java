@@ -37,4 +37,23 @@ class WebHtopApplicationTests {
         System.out.println((double)(body.getGlobalMemoryDto().getTotal()/1024.0/1024.0/1024.0) +" GB");
     }
 
+    @Test
+    public void getProcessorInfo(){
+        InfoDto body=(InfoDto) infoController.getInfo().getBody();
+        System.out.println(body.getProcessorDto().getBitDepth());
+        System.out.println(body.getProcessorDto().getCoreCount());
+        System.out.println(body.getProcessorDto().getCurrentFreq());
+        System.out.println(body.getProcessorDto().getMaxFreq());
+        System.out.println(body.getProcessorDto().getPhysicalProcessorCount());
+        System.out.println(body.getProcessorDto().getName());
+    }
+    @Test
+    public void getComputerSystemInfo(){
+        InfoDto body = (InfoDto) infoController.getInfo().getBody();
+        System.out.println(body.getComputerSystemDto().getBaseboard());
+        System.out.println(body.getComputerSystemDto().getFirmware());
+        System.out.println(body.getComputerSystemDto().getManufacturer());
+        System.out.println(body.getComputerSystemDto().getSerialNumber());
+    }
+
 }

@@ -7,6 +7,8 @@ import oshi.hardware.GlobalMemory;
 @Getter
 @Setter
 public class InfoDto {
+    private ComputerSystemDto computerSystemDto;
+//    物理硬件
     private ProcessorDto processorDto;
 //    处理器
     private OperatingSystemDto operatingSystemDto;
