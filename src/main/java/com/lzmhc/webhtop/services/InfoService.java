@@ -153,27 +153,29 @@ public class InfoService {
      * Storage info
      * @return
      */
-    private StorageDto getStorage(){
-        StorageDto storageDto = new StorageDto();
+    private List<StorageDto> getStorage(){
+        List<StorageDto> storageDtosList = new ArrayList<>();
         List<HWDiskStore> hwDiskStoreList = systemInfo.getHardware().getDiskStores();
-//        Optional<HWDiskStore> hwDiskStoreOptional=hwDiskStoreList.stream().findFirst();
-        Optional<HWDiskStore> hwDiskStoreOptional= Optional.ofNullable(hwDiskStoreList.get(hwDiskStoreList.size()-1));
-        if(hwDiskStoreOptional.isPresent()){
-            String mainStorage=hwDiskStoreOptional.get().getModel();
-            if(mainStorage.contains("(Standard disk drives)")){
-                mainStorage=mainStorage.substring(0, mainStorage.indexOf("(Standard disk drives)")-1);
+        for( HWDiskStore hwDiskStore : hwDiskStoreList) {
+            StorageDto storageDto = new StorageDto();
+            Optional<HWDiskStore> hwDiskStoreOptional = Optional.ofNullable(hwDiskStore);
+            if (hwDiskStoreOptional.isPresent()) {
+                String mainStorage = hwDiskStoreOptional.get().getModel();
+                if (mainStorage.contains("(Standard disk drives)")) {
+                    mainStorage = mainStorage.substring(0, mainStorage.indexOf("(Standard disk drives)") - 1);
+                }
+                storageDto.setMainStorage(mainStorage.trim());
+            } else {
+                storageDto.setMainStorage("Undefined");
             }
-            storageDto.setMainStorage(mainStorage.trim());
-        }else{
-            storageDto.setMainStorage("Undefined");
+            long total = hwDiskStoreList.stream().mapToLong(HWDiskStore::getSize).sum();
+            storageDto.setTotal(getConvertedCapacity(total) + " Total");
+            int diskCount = hwDiskStoreList.size();
+            storageDto.setDiskCount(diskCount + ((diskCount > 1) ? "Disks" : "Disk"));
+            storageDtosList.add(storageDto);
         }
-        long total = hwDiskStoreList.stream().mapToLong(HWDiskStore::getSize).sum();
-        storageDto.setTotal(getConvertedCapacity(total)+" Total");
-        int diskCount = hwDiskStoreList.size();
-        storageDto.setDiskCount(diskCount+((diskCount>1)? "Disks":"Disk"));
-        return storageDto;
+        return storageDtosList;
     }
-
     /**
      * 显卡
      * @return
@@ -191,7 +193,7 @@ public class InfoService {
         infoDto.setGlobalMemoryDto(this.getGlobalMemory());
         infoDto.setComputerSystemDto(this.getComputerSystem());
         infoDto.setPowerSourceList(systemInfo.getHardware().getPowerSources());
-        infoDto.setStorageDto(this.getStorage());
+        infoDto.setStorageDtoList(this.getStorage());
         infoDto.setGraphicsCardDto(this.getGraphicsCards());
         return infoDto;
     }

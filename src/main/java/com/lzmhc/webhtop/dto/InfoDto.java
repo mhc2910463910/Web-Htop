@@ -30,9 +30,9 @@ public class InfoDto {
     /**
      * 电池
      */
-    private StorageDto storageDto;
+    private List<StorageDto> storageDtoList;
     /**
-     * 存储
+     * 磁盘存储
      */
     private GraphicsCardDto graphicsCardDto;
     /**

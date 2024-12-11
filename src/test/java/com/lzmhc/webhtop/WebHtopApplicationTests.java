@@ -2,6 +2,7 @@ package com.lzmhc.webhtop;
 
 import com.lzmhc.webhtop.controllers.InfoController;
 import com.lzmhc.webhtop.dto.InfoDto;
+import com.lzmhc.webhtop.dto.StorageDto;
 import com.lzmhc.webhtop.services.InfoService;
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
@@ -67,9 +68,12 @@ class WebHtopApplicationTests {
     @Test
     public void getStorageInfo(){
         InfoDto body = (InfoDto) infoController.getInfo().getBody();
-        System.out.println("磁盘模型: "+body.getStorageDto().getMainStorage());
-        System.out.println("磁盘数量: "+body.getStorageDto().getDiskCount());
-        System.out.println("磁盘空间: "+body.getStorageDto().getTotal());
+        List<StorageDto> storageDtoList = body.getStorageDtoList();
+        for(StorageDto storageDto:storageDtoList) {
+            System.out.println("磁盘模型: " + storageDto.getMainStorage());
+            System.out.println("磁盘数量: " + storageDto.getDiskCount());
+            System.out.println("磁盘空间: " + storageDto.getTotal());
+        }
     }
     @Test
     public void getGraphicsCardsInfo(){
