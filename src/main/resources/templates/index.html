@@ -5,7 +5,19 @@
     <link rel="stylesheet" th:href="@{/static/css/index.css}" type="text/css">
 </head>
 <body>
-    <!--操作系统BIOS-->
+    <table>
+        <caption>磁盘</caption>
+        <tr>
+            <th>磁盘型号</th>
+            <th>磁盘容量</th>
+            <th>磁盘数量</th>
+        </tr>
+        <tr>
+            <td><span th:text="${info.storageDtoList.get(1).mainStorage}"></span></td>
+            <td><span th:text="${info.storageDtoList.get(1).total}"></span></td>
+            <td><span th:text="${info.storageDtoList.get(1).diskCount}"></span></td>
+        </tr>
+    </table>
     <table >
         <caption>BIOS</caption>
         <tr>
@@ -21,7 +33,55 @@
             <td><span th:text="${info.computerSystemDto.release_date}"></span></td>
         </tr>
     </table>
-
+    <table>
+        <caption>显卡</caption>
+        <tr>
+            <th>显卡型号</th>
+            <th>设备ID</th>
+            <th>供应商</th>
+            <th>显存</th>
+        </tr>
+        <tr>
+            <td>   <span th:text="${info.graphicsCardDto.graphicsCardList.get(0).getName()}"></span></td>
+            <td>   <span th:text="${info.graphicsCardDto.graphicsCardList.get(0).getDeviceId()}"></span></td>
+            <td>   <span th:text="${info.graphicsCardDto.graphicsCardList.get(0).getVendor()}"></span></td>
+            <td>   <span th:text="${info.graphicsCardDto.graphicsCardList.get(0).getVRam()/1024/1024}"></span>MB</td>
+        </tr>
+    </table>
+    <table>
+        <caption>内存</caption>
+        <tr>
+            <th>可用</th>
+            <th>已使用</th>
+            <th>物理内存</th>
+            <th>虚拟内存已用</th>
+            <th>虚拟内存</th>
+        </tr>
+        <tr>
+            <td><span th:text="${info.globalMemoryDto.availableMemory}"></span></td>
+            <td><span th:text="${info.globalMemoryDto.usedMemory}"></span></td>
+            <td><span th:text="${info.globalMemoryDto.totalMemory}"></span></td>
+            <td><span th:text="${info.globalMemoryDto.virtualUsedMemory}"></span></td>
+            <td><span th:text="${info.globalMemoryDto.virtuallMemory}"></span></td>
+        </tr>
+    </table>
+    <table>
+        <caption>操作系统</caption>
+        <tr>
+            <th>操作系统名称</th>
+            <th>操作系统位数</th>
+            <th>版本</th>
+            <th>操作系统版本号</th>
+            <th>开机时间</th>
+        </tr>
+        <tr>
+            <td><span th:text="${info.operatingSystemDto.family}"></span></td>
+            <td><span th:text="${info.operatingSystemDto.bitness}"></span></td>
+            <td><span th:text="${info.operatingSystemDto.versionInfo.version}"></span></td>
+            <td><span th:text="${info.operatingSystemDto.versionInfo.buildNumber}"></span></td>
+            <td><span th:text="${info.operatingSystemDto.systemboottime}"></span></td>
+        </tr>
+    </table>
     <table>
         <caption>处理器信息</caption>
         <tr>
@@ -45,43 +105,6 @@
             <td><span th:text="${info.processorDto.sensoresSpeedList}"></span></td>
         </tr>
     </table>
-
-    <table>
-        <caption>操作系统</caption>
-        <tr>
-            <th>操作系统名称</th>
-            <th>操作系统位数</th>
-            <th>版本</th>
-            <th>操作系统版本号</th>
-            <th>开机时间</th>
-        </tr>
-        <tr>
-            <td><span th:text="${info.operatingSystemDto.family}"></span></td>
-            <td><span th:text="${info.operatingSystemDto.bitness}"></span></td>
-            <td><span th:text="${info.operatingSystemDto.versionInfo.version}"></span></td>
-            <td><span th:text="${info.operatingSystemDto.versionInfo.buildNumber}"></span></td>
-            <td><span th:text="${info.operatingSystemDto.systemboottime}"></span></td>
-        </tr>
-    </table>
-
-    <table>
-        <caption>内存</caption>
-        <tr>
-            <th>可用</th>
-            <th>已使用</th>
-            <th>物理内存</th>
-            <th>虚拟内存已用</th>
-            <th>虚拟内存</th>
-        </tr>
-        <tr>
-            <td><span th:text="${info.globalMemoryDto.availableMemory}"></span></td>
-            <td><span th:text="${info.globalMemoryDto.usedMemory}"></span></td>
-            <td><span th:text="${info.globalMemoryDto.totalMemory}"></span></td>
-            <td><span th:text="${info.globalMemoryDto.virtualUsedMemory}"></span></td>
-            <td><span th:text="${info.globalMemoryDto.virtuallMemory}"></span></td>
-        </tr>
-    </table>
-
     <table>
         <caption>电源</caption>
         <tr>
@@ -109,34 +132,5 @@
             <td><span th:text="${info.powerDto.manufacturer}"></span></td>
         </tr>
     </table>
-
-    <table>
-        <caption>磁盘</caption>
-        <tr>
-            <th>磁盘型号</th>
-            <th>磁盘容量</th>
-            <th>磁盘数量</th>
-        </tr>
-        <tr>
-            <td><span th:text="${info.storageDtoList.get(1).mainStorage}"></span></td>
-            <td><span th:text="${info.storageDtoList.get(1).total}"></span></td>
-            <td><span th:text="${info.storageDtoList.get(1).diskCount}"></span></td>
-        </tr>
-    </table>
-
-    <table>
-        <caption>显卡</caption>
-        <tr>
-            <th>显卡型号</th>
-            <th>设备ID</th>
-            <th>供应商</th>
-        </tr>
-        <tr>
-            <td>   <span th:text="${info.graphicsCardDto.graphicsCardList.get(0).name}"></span></td>
-            <td>   <span th:text="${info.graphicsCardDto.graphicsCardList.get(0).deviceId}"></span></td>
-            <td>   <span th:text="${info.graphicsCardDto.graphicsCardList.get(0).vendor}"></span></td>
-        </tr>
-    </table>
-<!--    显存<span th:text="${info.graphicsCardDto.graphicsCardList.get(0).vram}"></span>-->
 </body>
 </html>
