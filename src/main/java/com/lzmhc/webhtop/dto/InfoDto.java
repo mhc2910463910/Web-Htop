@@ -26,7 +26,7 @@ public class InfoDto {
     /**
      * 内存
      */
-    private List<PowerSource> powerSourceList;
+    private PowerDto powerDto;
     /**
      * 电池
      */

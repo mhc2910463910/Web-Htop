@@ -63,7 +63,16 @@ class WebHtopApplicationTests {
     @Test
     public void getPowerSourcesInfo(){
         InfoDto body = (InfoDto) infoController.getInfo().getBody();
-        System.out.println(body.getPowerSourceList());
+        System.out.println("电源名称: "+body.getPowerDto().getName());
+        System.out.println("设备名称: "+body.getPowerDto().getDeviceName());
+        System.out.println("电压: "+body.getPowerDto().getVoltage());
+        System.out.println("是否接入电源: "+body.getPowerDto().isPowerOnLine());
+        System.out.println("是否在充电: "+body.getPowerDto().isCharging());
+        System.out.println("是否放电: "+body.getPowerDto().isDischarging());
+        System.out.println("当前容量: "+body.getPowerDto().getCurrentCapacity());
+        System.out.println("最大容量: "+body.getPowerDto().getMaxCapacity());
+        System.out.println("电池性质: "+body.getPowerDto().getChemistry());
+        System.out.println("电池制造商: "+body.getPowerDto().getManufacturer());
     }
     @Test
     public void getStorageInfo(){

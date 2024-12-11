@@ -193,7 +193,22 @@ public class InfoService {
     private PowerDto getPowerSource(){
         PowerDto powerDto = new PowerDto();
         List<PowerSource> powerSources = systemInfo.getHardware().getPowerSources();
-        return powerDto;
+        for(PowerSource powerSource:powerSources){
+            if(!powerSource.getDeviceName().equals("unknown")){
+                powerDto.setName(powerSource.getName());
+                powerDto.setDeviceName(powerSource.getDeviceName());
+                powerDto.setVoltage(powerSource.getVoltage()/1E-6+" v");
+                powerDto.setPowerOnLine(powerSource.isPowerOnLine());
+                powerDto.setCharging(powerSource.isCharging());
+                powerDto.setDischarging(powerSource.isDischarging());
+                powerDto.setCurrentCapacity(powerDto.getCurrentCapacity());
+                powerDto.setMaxCapacity(powerSource.getMaxCapacity());
+                powerDto.setChemistry(powerSource.getChemistry());
+                powerDto.setManufacturer(powerSource.getManufacturer());
+                return powerDto;
+            }
+        }
+        return null;
     }
     public InfoDto getInfo() {
         InfoDto infoDto = new InfoDto();
@@ -201,7 +216,7 @@ public class InfoService {
         infoDto.setOperatingSystemDto(this.getOperatingSystem());
         infoDto.setGlobalMemoryDto(this.getGlobalMemory());
         infoDto.setComputerSystemDto(this.getComputerSystem());
-        infoDto.setPowerSourceList(systemInfo.getHardware().getPowerSources());
+        infoDto.setPowerDto(this.getPowerSource());
         infoDto.setStorageDtoList(this.getStorage());
         infoDto.setGraphicsCardDto(this.getGraphicsCards());
         return infoDto;
