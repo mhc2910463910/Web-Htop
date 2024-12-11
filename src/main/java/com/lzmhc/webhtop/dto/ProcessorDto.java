@@ -7,15 +7,23 @@ import lombok.Setter;
 @Getter
 public class ProcessorDto {
         private String name;
-//        名称
+        /**
+         * 名称
+         */
         private int coreCount;
-//        可用于处理的逻辑CPU核心数
-        private int physicalProcessorCount;
-//        物理CPU核心数
-        private long maxFreq;
-//        最大频率
+        /**
+         * 可用于处理的逻辑CPU核心数
+         */
+        private String maxFreq;
+        /**
+         * 最大频率
+         */
         private String currentFreq;
-//        当前频率
+        /**
+         * 当前频率
+         */
         private String bitDepth;
-//        位
+        /**
+         * 位
+         */
 }

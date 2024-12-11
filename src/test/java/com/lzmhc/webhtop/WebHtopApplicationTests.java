@@ -44,7 +44,6 @@ class WebHtopApplicationTests {
         System.out.println(body.getProcessorDto().getCoreCount());
         System.out.println(body.getProcessorDto().getCurrentFreq());
         System.out.println(body.getProcessorDto().getMaxFreq());
-        System.out.println(body.getProcessorDto().getPhysicalProcessorCount());
         System.out.println(body.getProcessorDto().getName());
     }
     @Test

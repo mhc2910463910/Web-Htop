@@ -14,6 +14,12 @@ import java.util.Optional;
 public class InfoService {
     @Autowired
     private SystemInfo systemInfo;
+
+    /**
+     * processor info
+     * @param hertzArray
+     * @return
+     */
     private String getConvertedFrequency(long[] hertzArray){
         long totalFrequency = Arrays.stream(hertzArray).sum();
         long hertz = totalFrequency / hertzArray.length;
@@ -23,28 +29,35 @@ public class InfoService {
             return Math.round(hertz/1E+6)+" MHz";
         }
     }
+    private String getConvertedFrequency(long hertz){
+        if((hertz/1E+6)>999){
+            return (Math.round((hertz / 1E+9)*10.0)/10.0)+" GHz";
+        }else{
+            return Math.round(hertz/1E+6)+" MHz";
+        }
+    }
+    /**
+     * Processor info
+     * @return
+     */
     private ProcessorDto getProcessor(){
         ProcessorDto processorDto = new ProcessorDto();
         CentralProcessor centralProcessor = systemInfo.getHardware().getProcessor();
         CentralProcessor.ProcessorIdentifier processorIdentifier = centralProcessor.getProcessorIdentifier();
-        String name = processorIdentifier.getProcessorID()+"_"
-                +processorIdentifier.getName()+"_"
-                +processorIdentifier.getVendor();
-//        CPU的标识符
-//        if(name.contains("@")){
-//            name = name.substring(0, name.indexOf('@')-1);
-//        }
+        String name = processorIdentifier.getName();
         processorDto.setName(name.trim());
         int coreCount = centralProcessor.getLogicalProcessorCount();
-//        可用于处理的CPU数量
         processorDto.setCoreCount(coreCount);
-        processorDto.setMaxFreq(centralProcessor.getMaxFreq());
+        processorDto.setMaxFreq(getConvertedFrequency(centralProcessor.getMaxFreq()));
         processorDto.setCurrentFreq(getConvertedFrequency(centralProcessor.getCurrentFreq()));
         String BitDepthPrefix = processorIdentifier.isCpu64bit()?"64":"32";
         processorDto.setBitDepth(BitDepthPrefix+"-bit");
         return processorDto;
     }
-
+    /**
+     * OperationSystem info
+     * @return
+     */
     private OperatingSystemDto getOperatingSystem(){
 //        操作系统
         OperatingSystemDto operatingSystemDto=new OperatingSystemDto();
@@ -58,6 +71,10 @@ public class InfoService {
         return operatingSystemDto;
     }
 
+    /**
+     * Memory info
+     * @return
+     */
     private GlobalMemoryDto getGlobalMemory(){
 //        全局内存
         GlobalMemoryDto globalMemoryDto=new GlobalMemoryDto();
@@ -113,6 +130,11 @@ public class InfoService {
             return Math.round(bits / 1.049E+6) + " MiB";
         }
     }
+
+    /**
+     * Storage info
+     * @return
+     */
     private StorageDto getStorage(){
         StorageDto storageDto = new StorageDto();
 
