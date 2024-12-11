@@ -12,5 +12,5 @@ Web Htop is a simple server system monitoring tool that displays system operatio
 Thanks 致谢
 
 - [Ward](https://github.com/Rudolf-Barbu/Ward)
-
 - [Oshi](https://github.com/oshi/oshi)
+- [Web-Htop-fronted](https://github.com/OldSaltFish/Web-Htop-fronted)
