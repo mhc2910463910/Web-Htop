@@ -91,7 +91,7 @@ class WebHtopApplicationTests {
         for( GraphicsCard graphicsCard: graphicsCardList){
             System.out.println("显卡名称: "+graphicsCard.getName());
             System.out.println("供应商: "+graphicsCard.getVendor());
-            System.out.println("显存: "+graphicsCard.getVRam());
+            System.out.println("显存: "+graphicsCard.getVRam()/1024.0/1024.0 +" MB");
         }
 
     }
