@@ -7,7 +7,7 @@ Web Htop is a simple server system monitoring tool that displays system operatio
 
 ##### ScreenShot 截图
 
-![](screen/webhtop.jpg)
+![](screen/screen.jpg)
 
 ##### Thanks 致谢
 
