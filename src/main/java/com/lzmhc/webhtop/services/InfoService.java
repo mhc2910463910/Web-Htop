@@ -102,6 +102,8 @@ public class InfoService {
         globalMemoryDto.setTotalMemory(String.format("%.2f", total)+" GB");
         double used = total-availabel;
         globalMemoryDto.setUsedMemory(String.format("%.2f", used)+" GB");
+        double percentage = used/total;
+        globalMemoryDto.setPercentage(percentage);
         double virtualUsedMemory=memory.getVirtualMemory().getSwapUsed()/1024.0/1024.0;
         if(virtualUsedMemory > 999){
             virtualUsedMemory = virtualUsedMemory/1024.0;

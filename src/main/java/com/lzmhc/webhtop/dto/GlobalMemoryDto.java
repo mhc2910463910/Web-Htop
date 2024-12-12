@@ -30,4 +30,8 @@ public class GlobalMemoryDto {
     /**
      * 虚拟内存
      */
+    private double percentage;
+    /**
+     * 已用/总的比率
+     */
 }

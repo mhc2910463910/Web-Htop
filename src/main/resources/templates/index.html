@@ -1,137 +1,14 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org"  lang="en">
-<head>
+<html lang="">
+  <head>
     <meta charset="UTF-8">
-    <link rel="stylesheet" th:href="@{/static/css/index.css}" type="text/css">
-</head>
-<body>
-    <table>
-        <tr>
-            <th>磁盘型号</th>
-            <th>磁盘容量</th>
-            <th>磁盘数量</th>
-        </tr>
-        <tr>
-            <td><span th:text="${info.storageDtoList.get(1).mainStorage}"></span></td>
-            <td><span th:text="${info.storageDtoList.get(1).total}"></span></td>
-            <td><span th:text="${info.storageDtoList.get(1).diskCount}"></span></td>
-        </tr>
-    </table>
-    <table >
-        <tr>
-            <th>制造商</th>
-            <th>产品名称</th>
-            <th>BIOS版本</th>
-            <th>发布日期</th>
-        </tr>
-        <tr>
-            <td><span th:text="${info.computerSystemDto.manufacturer}"></span></td>
-            <td><span th:text="${info.computerSystemDto.model}"></span></td>
-            <td><span th:text="${info.computerSystemDto.version}"></span></td>
-            <td><span th:text="${info.computerSystemDto.release_date}"></span></td>
-        </tr>
-    </table>
-    <table>
-        <tr>
-            <th>显卡型号</th>
-            <th>设备ID</th>
-            <th>供应商</th>
-            <th>显存</th>
-        </tr>
-        <tr>
-            <td>   <span th:text="${info.graphicsCardDto.graphicsCardList.get(0).getName()}"></span></td>
-            <td>   <span th:text="${info.graphicsCardDto.graphicsCardList.get(0).getDeviceId()}"></span></td>
-            <td>   <span th:text="${info.graphicsCardDto.graphicsCardList.get(0).getVendor()}"></span></td>
-            <td>   <span th:text="${info.graphicsCardDto.graphicsCardList.get(0).getVRam()/1024/1024}"></span>MB</td>
-        </tr>
-    </table>
-    <table>
-        <tr>
-            <th>可用</th>
-            <th>已使用</th>
-            <th>物理内存</th>
-            <th>虚拟内存已用</th>
-            <th>虚拟内存</th>
-        </tr>
-        <tr>
-            <td><span th:text="${info.globalMemoryDto.availableMemory}"></span></td>
-            <td><span th:text="${info.globalMemoryDto.usedMemory}"></span></td>
-            <td><span th:text="${info.globalMemoryDto.totalMemory}"></span></td>
-            <td><span th:text="${info.globalMemoryDto.virtualUsedMemory}"></span></td>
-            <td><span th:text="${info.globalMemoryDto.virtuallMemory}"></span></td>
-        </tr>
-    </table>
-    <table>
-        <tr>
-            <th>操作系统名称</th>
-            <th>操作系统位数</th>
-            <th>版本</th>
-            <th>操作系统版本号</th>
-            <th>开机时间</th>
-        </tr>
-        <tr>
-            <td><span th:text="${info.operatingSystemDto.family}"></span></td>
-            <td><span th:text="${info.operatingSystemDto.bitness}"></span></td>
-            <td><span th:text="${info.operatingSystemDto.versionInfo.version}"></span></td>
-            <td><span th:text="${info.operatingSystemDto.versionInfo.buildNumber}"></span></td>
-            <td><span th:text="${info.operatingSystemDto.systemboottime}"></span></td>
-        </tr>
-    </table>
-    <table>
-        <tr>
-            <th>处理器</th>
-            <th>CPU核心</th>
-            <th>最大频率</th>
-            <th>当前频率</th>
-            <th>位数</th>
-            <th>CPU电压</th>
-            <th>CPU温度</th>
-            <th>风扇转速</th>
-        </tr>
-        <tr>
-            <td><span th:text="${info.processorDto.name}"></span></td>
-            <td><span th:text="${info.processorDto.coreCount}"></span></td>
-            <td> <span th:text="${info.processorDto.maxFreq}"></span></td>
-            <td><span th:text="${info.processorDto.currentFreq}"></span></td>
-            <td><span th:text="${info.processorDto.bitDepth}"></span></td>
-            <td><span th:text="${info.processorDto.sensorsVoltage}"></span></td>
-            <td><span th:text="${info.processorDto.sensoresTemperature}"></span></td>
-            <td><span th:text="${info.processorDto.sensoresSpeedList}"></span></td>
-        </tr>
-    </table>
-    <table>
-        <tr>
-            <th>电源名称</th>
-            <th>设备名称</th>
-            <th>电压</th>
-            <th>是否接入电源</th>
-            <th>是否充电</th>
-            <th>是否放电</th>
-            <th>当前容量</th>
-            <th>最大容量</th>
-            <th>设计容量</th>
-            <th>电池性质</th>
-            <th>电池制造商</th>
-        </tr>
-        <tr>
-            <td><span th:text="${info.powerDto.name}"></span></td>
-            <td><span th:text="${info.powerDto.deviceName}"></span></td>
-            <td><span th:text="${info.powerDto.voltage}"></span></td>
-            <td><span th:text="${info.powerDto.powerOnLine}"></span></td>
-            <td><span th:text="${info.powerDto.charging}"></span></td>
-            <td><span th:text="${info.powerDto.discharging}"></span></td>
-            <td><span th:text="${info.powerDto.currentCapacity}"></span></td>
-            <td><span th:text="${info.powerDto.maxCapacity}"></span></td>
-            <td><span th:text="${info.powerDto.designCapacity}"></span></td>
-            <td><span th:text="${info.powerDto.chemistry}"></span></td>
-            <td><span th:text="${info.powerDto.manufacturer}"></span></td>
-        </tr>
-    </table>
-    <script >
-        function Refresh(){
-            window.location.reload();
-        }
-        setTimeout('Refresh()',1000);
-    </script>
-</body>
+    <link rel="icon" href="/static/img/ico/favicon.ico">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vite App</title>
+    <script type="module" crossorigin src="/static/assets/index-Chp3faFn.js"></script>
+    <link rel="stylesheet" crossorigin href="/static/assets/index-CP-5MLHX.css">
+  </head>
+  <body>
+    <div id="app"></div>
+  </body>
 </html>

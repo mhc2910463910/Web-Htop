@@ -35,6 +35,7 @@ class WebHtopApplicationTests {
         System.out.println("物理内存: "+body.getGlobalMemoryDto().getTotalMemory() +" GB");
         System.out.println("可用物理内存: "+body.getGlobalMemoryDto().getAvailableMemory() + " GB");
         System.out.println("已用物理内存: "+body.getGlobalMemoryDto().getUsedMemory() + " GB");
+        System.out.println("物理内存利用率: "+body.getGlobalMemoryDto().getPercentage()+" %");
         System.out.println("虚拟内存: "+body.getGlobalMemoryDto().getVirtuallMemory()+" GB");
         System.out.println("已用虚拟内存: "+body.getGlobalMemoryDto().getVirtualUsedMemory()+" GB");
     }
