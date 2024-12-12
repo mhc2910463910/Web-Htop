@@ -70,6 +70,7 @@ class WebHtopApplicationTests {
         System.out.println("是否在充电: "+body.getPowerDto().isCharging());
         System.out.println("是否放电: "+body.getPowerDto().isDischarging());
         System.out.println("当前容量: "+body.getPowerDto().getCurrentCapacity());
+        System.out.println("设计容量: "+body.getPowerDto().getDesignCapacity());
         System.out.println("最大容量: "+body.getPowerDto().getMaxCapacity());
         System.out.println("电池性质: "+body.getPowerDto().getChemistry());
         System.out.println("电池制造商: "+body.getPowerDto().getManufacturer());

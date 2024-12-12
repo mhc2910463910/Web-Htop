@@ -116,6 +116,7 @@
             <th>是否放电</th>
             <th>当前容量</th>
             <th>最大容量</th>
+            <th>设计容量</th>
             <th>电池性质</th>
             <th>电池制造商</th>
         </tr>
@@ -128,6 +129,7 @@
             <td><span th:text="${info.powerDto.discharging}"></span></td>
             <td><span th:text="${info.powerDto.currentCapacity}"></span></td>
             <td><span th:text="${info.powerDto.maxCapacity}"></span></td>
+            <td><span th:text="${info.powerDto.designCapacity}"></span></td>
             <td><span th:text="${info.powerDto.chemistry}"></span></td>
             <td><span th:text="${info.powerDto.manufacturer}"></span></td>
         </tr>

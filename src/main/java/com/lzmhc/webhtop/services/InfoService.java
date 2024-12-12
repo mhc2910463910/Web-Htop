@@ -194,6 +194,7 @@ public class InfoService {
         PowerDto powerDto = new PowerDto();
         List<PowerSource> powerSources = systemInfo.getHardware().getPowerSources();
         for(PowerSource powerSource:powerSources){
+//            System.out.println(powerSource);
             if(!powerSource.getDeviceName().equals("unknown")){
                 powerDto.setName(powerSource.getName());
                 powerDto.setDeviceName(powerSource.getDeviceName());
@@ -201,8 +202,9 @@ public class InfoService {
                 powerDto.setPowerOnLine(powerSource.isPowerOnLine());
                 powerDto.setCharging(powerSource.isCharging());
                 powerDto.setDischarging(powerSource.isDischarging());
-                powerDto.setCurrentCapacity(powerDto.getCurrentCapacity());
+                powerDto.setCurrentCapacity(powerSource.getCurrentCapacity());
                 powerDto.setMaxCapacity(powerSource.getMaxCapacity());
+                powerDto.setDesignCapacity(powerSource.getDesignCapacity());
                 powerDto.setChemistry(powerSource.getChemistry());
                 powerDto.setManufacturer(powerSource.getManufacturer());
                 return powerDto;

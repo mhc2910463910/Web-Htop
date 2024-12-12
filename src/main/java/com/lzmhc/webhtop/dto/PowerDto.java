@@ -39,6 +39,10 @@ public class PowerDto {
      */
     private double maxCapacity;
     /**
+     * 设计容量
+     */
+    private double designCapacity;
+    /**
      * 电池化学性质
      */
     private String chemistry;
