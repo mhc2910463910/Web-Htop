@@ -4,4 +4,4 @@ spring:
   mvc:
     view:
       prefix: classpath:/templates/
-    static-path-pattern: /static/**
+    static-path-pattern: /**

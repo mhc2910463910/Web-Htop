@@ -8,15 +8,14 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.util.Map;
-
 @Controller
-@RequestMapping(value = "/")
-public class IndexController {
+@RequestMapping(value = "/about")
+public class AboutController {
     @Autowired
     private InfoService infoService;
     @GetMapping
-    public String getIndex(Map<String,InfoDto> map){
+    public String getIndex(Map<String, InfoDto> map){
         map.put("info",infoService.getInfo());
-        return "index";
+        return "about";
     }
 }
