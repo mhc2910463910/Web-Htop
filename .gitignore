@@ -39,10 +39,10 @@ build/
 *.iml
 out
 gen
-!/src/test/
-!/.mvn/
-!/.gitattributes
-!/.gitmodules
-!/mvnw
-!/mvnw.cmd
-!/.gitignore
+/src/test/
+/.mvn/
+/.gitattributes
+/.gitmodules
+/mvnw
+/mvnw.cmd
+/.gitignore
