@@ -31,3 +31,18 @@ build/
 
 ### VS Code ###
 .vscode/
+### Example user template template
+### Example user template
+
+# IntelliJ project files
+.idea
+*.iml
+out
+gen
+!/src/test/
+!/.mvn/
+!/.gitattributes
+!/.gitmodules
+!/mvnw
+!/mvnw.cmd
+!/.gitignore
