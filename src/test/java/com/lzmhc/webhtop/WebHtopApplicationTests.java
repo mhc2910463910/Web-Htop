@@ -38,6 +38,8 @@ class WebHtopApplicationTests {
         System.out.println("物理内存利用率: "+body.getGlobalMemoryDto().getPercentage()+" %");
         System.out.println("虚拟内存: "+body.getGlobalMemoryDto().getVirtuallMemory()+" GB");
         System.out.println("已用虚拟内存: "+body.getGlobalMemoryDto().getVirtualUsedMemory()+" GB");
+        System.out.println("内存类型/位: "+body.getGlobalMemoryDto().getRamTypeOrOsBitDepth());
+        System.out.println("进程数: "+body.getGlobalMemoryDto().getProcCount());
     }
 
     @Test
@@ -51,6 +53,7 @@ class WebHtopApplicationTests {
         System.out.println("CPU温度: "+body.getProcessorDto().getSensoresTemperature());
         System.out.println("CPU电压: "+body.getProcessorDto().getSensorsVoltage());
         System.out.println("风扇速度: "+body.getProcessorDto().getSensoresSpeedList());
+        System.out.println("CPU使用率: "+body.getProcessorDto().getUsedRate());
     }
     @Test
     public void getComputerSystemInfo(){
@@ -84,6 +87,7 @@ class WebHtopApplicationTests {
             System.out.println("磁盘模型: " + storageDto.getMainStorage());
             System.out.println("磁盘数量: " + storageDto.getDiskCount());
             System.out.println("磁盘空间: " + storageDto.getTotal());
+            System.out.println("磁盘I/O率:" + storageDto.getUsedRate());
         }
     }
     @Test

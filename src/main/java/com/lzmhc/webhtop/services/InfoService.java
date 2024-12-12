@@ -5,7 +5,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import oshi.SystemInfo;
 import oshi.hardware.*;
+import oshi.software.os.FileSystem;
+import oshi.software.os.OSFileStore;
 import oshi.software.os.OperatingSystem;
+import oshi.util.Util;
 
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
@@ -43,9 +46,6 @@ public class InfoService {
      */
     private ProcessorDto getProcessor(){
         ProcessorDto processorDto = new ProcessorDto();
-        /**
-         * cpu数据
-         */
         CentralProcessor centralProcessor = systemInfo.getHardware().getProcessor();
         CentralProcessor.ProcessorIdentifier processorIdentifier = centralProcessor.getProcessorIdentifier();
         String name = processorIdentifier.getName();
@@ -56,9 +56,6 @@ public class InfoService {
         processorDto.setCurrentFreq(getConvertedFrequency(centralProcessor.getCurrentFreq()));
         String BitDepthPrefix = processorIdentifier.isCpu64bit()?"64":"32";
         processorDto.setBitDepth(BitDepthPrefix+"-bit");
-        /**
-         * cpu温度和风扇速度
-         */
         Sensors sensors = systemInfo.getHardware().getSensors();
         String voltage = String.format("%.2f",sensors.getCpuVoltage());
         String temperature = String.format("%.2f",sensors.getCpuTemperature());
@@ -70,6 +67,18 @@ public class InfoService {
             speedList.add(String.valueOf(speed)+"rpm");
         }
         processorDto.setSensoresSpeedList(speedList);
+        /**
+         * 利用率计算
+         */
+        long[] prevTicksArray = centralProcessor.getSystemCpuLoadTicks();
+        long prevTotalTicks = Arrays.stream(prevTicksArray).sum();
+        long prevIdleTicks = prevTicksArray[CentralProcessor.TickType.IDLE.getIndex()];
+        Util.sleep(1000);
+        long[] currTicksArray = centralProcessor.getSystemCpuLoadTicks();
+        long currTotalTicks = Arrays.stream(currTicksArray).sum();
+        long currIdleTicks = currTicksArray[CentralProcessor.TickType.IDLE.getIndex()];
+        processorDto.setUsedRate(String.valueOf((int)Math.round((1-((double)(currIdleTicks-prevIdleTicks))/((double)(currTotalTicks-prevTotalTicks)))*100)));
+
         return processorDto;
     }
     /**
@@ -111,9 +120,17 @@ public class InfoService {
         }else{
             globalMemoryDto.setVirtualUsedMemory(String.format("%.2f", virtualUsedMemory)+" MB");
         }
-
         double virtualMemory=memory.getVirtualMemory().getSwapTotal()/1024.0/1024.0/1024.0;
         globalMemoryDto.setVirtuallMemory(String.format("%.2f", virtualMemory)+" GB");
+
+        Optional<PhysicalMemory> physicalMemoryOptional = memory.getPhysicalMemory().stream().findFirst();
+        if(physicalMemoryOptional.isPresent()){
+            globalMemoryDto.setRamTypeOrOsBitDepth(physicalMemoryOptional.get().getMemoryType());
+        }else{
+            globalMemoryDto.setRamTypeOrOsBitDepth(systemInfo.getOperatingSystem().getBitness()+" bit");
+        }
+        int processCount = systemInfo.getOperatingSystem().getProcessCount();
+        globalMemoryDto.setProcCount(processCount + ((processCount>1)? "Proces":"Proce"));
         return globalMemoryDto;
     }
     /**
@@ -180,6 +197,11 @@ public class InfoService {
             storageDto.setTotal(getConvertedCapacity(total) + " Total");
             int diskCount = hwDiskStoreList.size();
             storageDto.setDiskCount(diskCount + ((diskCount > 1) ? "Disks" : "Disk"));
+            FileSystem fileSystem = systemInfo.getOperatingSystem().getFileSystem();
+            long totalStorage = fileSystem.getFileStores().stream().mapToLong(OSFileStore::getTotalSpace).sum();
+            long freeStorages = fileSystem.getFileStores().stream().mapToLong(OSFileStore::getFreeSpace).sum();
+            String usedRate = String.valueOf((int)Math.round(((double)(totalStorage-freeStorages)/totalStorage)*100));
+            storageDto.setUsedRate(usedRate);
             storageDtosList.add(storageDto);
         }
         return storageDtosList;

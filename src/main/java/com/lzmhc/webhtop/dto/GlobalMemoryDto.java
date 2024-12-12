@@ -34,4 +34,12 @@ public class GlobalMemoryDto {
     /**
      * 已用/总的比率
      */
+    private String ramTypeOrOsBitDepth;
+    /**
+     * Ram type / OsBit
+     */
+    private String procCount;
+    /**
+     * Processes Count field
+     */
 }

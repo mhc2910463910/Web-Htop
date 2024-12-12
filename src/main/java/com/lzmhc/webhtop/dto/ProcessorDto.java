@@ -42,4 +42,8 @@ public class ProcessorDto {
         /**
          * 风扇速度
          */
+        private String usedRate;
+        /**
+         * 利用率
+         */
 }
