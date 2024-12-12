@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 import oshi.SystemInfo;
 import oshi.hardware.*;
 import oshi.software.os.OperatingSystem;
+import oshi.util.Util;
 
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
@@ -43,9 +44,6 @@ public class InfoService {
      */
     private ProcessorDto getProcessor(){
         ProcessorDto processorDto = new ProcessorDto();
-        /**
-         * cpu数据
-         */
         CentralProcessor centralProcessor = systemInfo.getHardware().getProcessor();
         CentralProcessor.ProcessorIdentifier processorIdentifier = centralProcessor.getProcessorIdentifier();
         String name = processorIdentifier.getName();
@@ -56,9 +54,6 @@ public class InfoService {
         processorDto.setCurrentFreq(getConvertedFrequency(centralProcessor.getCurrentFreq()));
         String BitDepthPrefix = processorIdentifier.isCpu64bit()?"64":"32";
         processorDto.setBitDepth(BitDepthPrefix+"-bit");
-        /**
-         * cpu温度和风扇速度
-         */
         Sensors sensors = systemInfo.getHardware().getSensors();
         String voltage = String.format("%.2f",sensors.getCpuVoltage());
         String temperature = String.format("%.2f",sensors.getCpuTemperature());
@@ -70,6 +65,18 @@ public class InfoService {
             speedList.add(String.valueOf(speed)+"rpm");
         }
         processorDto.setSensoresSpeedList(speedList);
+        /**
+         * 利用率计算
+         */
+        long[] prevTicksArray = centralProcessor.getSystemCpuLoadTicks();
+        long prevTotalTicks = Arrays.stream(prevTicksArray).sum();
+        long prevIdleTicks = prevTicksArray[CentralProcessor.TickType.IDLE.getIndex()];
+        Util.sleep(1000);
+        long[] currTicksArray = centralProcessor.getSystemCpuLoadTicks();
+        long currTotalTicks = Arrays.stream(currTicksArray).sum();
+        long currIdleTicks = currTicksArray[CentralProcessor.TickType.IDLE.getIndex()];
+        processorDto.setUsedRate(String.valueOf((int)Math.round((1-((double)(currIdleTicks-prevIdleTicks))/((double)(currTotalTicks-prevTotalTicks)))*100)));
+
         return processorDto;
     }
     /**

@@ -53,6 +53,7 @@ class WebHtopApplicationTests {
         System.out.println("CPU温度: "+body.getProcessorDto().getSensoresTemperature());
         System.out.println("CPU电压: "+body.getProcessorDto().getSensorsVoltage());
         System.out.println("风扇速度: "+body.getProcessorDto().getSensoresSpeedList());
+        System.out.println("CPU使用率: "+body.getProcessorDto().getUsedRate());
     }
     @Test
     public void getComputerSystemInfo(){
