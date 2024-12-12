@@ -62,7 +62,7 @@ public class InfoService {
         Sensors sensors = systemInfo.getHardware().getSensors();
         String voltage = String.format("%.2f",sensors.getCpuVoltage());
         String temperature = String.format("%.2f",sensors.getCpuTemperature());
-        processorDto.setSensoresTemperature(temperature+" 摄氏度");
+        processorDto.setSensoresTemperature(temperature+" ℃");
         processorDto.setSensorsVoltage(voltage+" V");
         int[] fanSpeeds = sensors.getFanSpeeds();
         List<String> speedList = new ArrayList<>();
@@ -97,15 +97,21 @@ public class InfoService {
         GlobalMemoryDto globalMemoryDto=new GlobalMemoryDto();
         GlobalMemory memory = systemInfo.getHardware().getMemory();
         double availabel = memory.getAvailable()/1024.0/1024.0/1024.0;
-        globalMemoryDto.setAvailableMemory(String.format("%.2f",availabel));
+        globalMemoryDto.setAvailableMemory(String.format("%.2f",availabel)+" GB");
         double total = memory.getTotal()/1024.0/1024.0/1024.0;
-        globalMemoryDto.setTotalMemory(String.format("%.2f", total));
+        globalMemoryDto.setTotalMemory(String.format("%.2f", total)+" GB");
         double used = total-availabel;
-        globalMemoryDto.setUsedMemory(String.format("%.2f", used));
-        double virtualUsedMemory=memory.getVirtualMemory().getSwapUsed()/1024.0/1024.0/1024.0;
-        globalMemoryDto.setVirtualUsedMemory(String.format("%.2f", virtualUsedMemory));
+        globalMemoryDto.setUsedMemory(String.format("%.2f", used)+" GB");
+        double virtualUsedMemory=memory.getVirtualMemory().getSwapUsed()/1024.0/1024.0;
+        if(virtualUsedMemory > 999){
+            virtualUsedMemory = virtualUsedMemory/1024.0;
+            globalMemoryDto.setVirtualUsedMemory(String.format("%.2f", virtualUsedMemory)+" GB");
+        }else{
+            globalMemoryDto.setVirtualUsedMemory(String.format("%.2f", virtualUsedMemory)+" MB");
+        }
+
         double virtualMemory=memory.getVirtualMemory().getSwapTotal()/1024.0/1024.0/1024.0;
-        globalMemoryDto.setVirtuallMemory(String.format("%.2f", virtualMemory));
+        globalMemoryDto.setVirtuallMemory(String.format("%.2f", virtualMemory)+" GB");
         return globalMemoryDto;
     }
     /**
@@ -194,13 +200,12 @@ public class InfoService {
         PowerDto powerDto = new PowerDto();
         List<PowerSource> powerSources = systemInfo.getHardware().getPowerSources();
         for(PowerSource powerSource:powerSources){
-//            System.out.println(powerSource);
             if(!powerSource.getDeviceName().equals("unknown")){
                 powerDto.setName(powerSource.getName());
                 powerDto.setDeviceName(powerSource.getDeviceName());
                 DecimalFormat format=new DecimalFormat("#.00");
                 String voltage = format.format((powerSource.getVoltage()));
-                powerDto.setVoltage(voltage+" v");
+                powerDto.setVoltage(voltage+" V");
                 powerDto.setPowerOnLine(powerSource.isPowerOnLine());
                 powerDto.setCharging(powerSource.isCharging());
                 powerDto.setDischarging(powerSource.isDischarging());
