@@ -1,0 +1,3 @@
+[submodule "Web-Htop-Fronted"]
+	path = Web-Htop-Fronted
+	url = https://github.com/OldSaltFish/Web-Htop-fronted
