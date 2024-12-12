@@ -87,6 +87,7 @@ class WebHtopApplicationTests {
             System.out.println("磁盘模型: " + storageDto.getMainStorage());
             System.out.println("磁盘数量: " + storageDto.getDiskCount());
             System.out.println("磁盘空间: " + storageDto.getTotal());
+            System.out.println("磁盘I/O率:" + storageDto.getUsedRate());
         }
     }
     @Test

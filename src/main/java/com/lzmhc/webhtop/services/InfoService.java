@@ -5,6 +5,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import oshi.SystemInfo;
 import oshi.hardware.*;
+import oshi.software.os.FileSystem;
+import oshi.software.os.OSFileStore;
 import oshi.software.os.OperatingSystem;
 import oshi.util.Util;
 
@@ -195,6 +197,11 @@ public class InfoService {
             storageDto.setTotal(getConvertedCapacity(total) + " Total");
             int diskCount = hwDiskStoreList.size();
             storageDto.setDiskCount(diskCount + ((diskCount > 1) ? "Disks" : "Disk"));
+            FileSystem fileSystem = systemInfo.getOperatingSystem().getFileSystem();
+            long totalStorage = fileSystem.getFileStores().stream().mapToLong(OSFileStore::getTotalSpace).sum();
+            long freeStorages = fileSystem.getFileStores().stream().mapToLong(OSFileStore::getFreeSpace).sum();
+            String usedRate = String.valueOf((int)Math.round(((double)(totalStorage-freeStorages)/totalStorage)*100));
+            storageDto.setUsedRate(usedRate);
             storageDtosList.add(storageDto);
         }
         return storageDtosList;

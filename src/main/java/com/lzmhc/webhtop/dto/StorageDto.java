@@ -18,4 +18,8 @@ public class StorageDto {
     /**
      * 磁盘数量
      */
+    private String usedRate;
+    /**
+     * 磁盘使用率
+     */
 }
