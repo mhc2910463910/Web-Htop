@@ -7,6 +7,7 @@ import oshi.SystemInfo;
 import oshi.hardware.*;
 import oshi.software.os.OperatingSystem;
 
+import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
@@ -185,7 +186,6 @@ public class InfoService {
         graphicsCardDto.setGraphicsCardList(graphicsCards);
         return graphicsCardDto;
     }
-
     /**
      * Power info
      * @return
@@ -198,7 +198,9 @@ public class InfoService {
             if(!powerSource.getDeviceName().equals("unknown")){
                 powerDto.setName(powerSource.getName());
                 powerDto.setDeviceName(powerSource.getDeviceName());
-                powerDto.setVoltage(powerSource.getVoltage()/1E-6+" v");
+                DecimalFormat format=new DecimalFormat("#.00");
+                String voltage = format.format((powerSource.getVoltage()/1E6));
+                powerDto.setVoltage(voltage+" v");
                 powerDto.setPowerOnLine(powerSource.isPowerOnLine());
                 powerDto.setCharging(powerSource.isCharging());
                 powerDto.setDischarging(powerSource.isDischarging());
