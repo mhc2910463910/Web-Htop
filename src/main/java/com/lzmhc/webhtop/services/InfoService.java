@@ -80,7 +80,7 @@ public class InfoService {
         OperatingSystemDto operatingSystemDto=new OperatingSystemDto();
         OperatingSystem operatingSystem = systemInfo.getOperatingSystem();
         operatingSystemDto.setBitness(operatingSystem.getBitness());
-        operatingSystemDto.setFamily(operatingSystemDto.getFamily());
+        operatingSystemDto.setFamily(operatingSystem.getFamily());
         operatingSystemDto.setVersionInfo(operatingSystem.getVersionInfo());
         Long timestamp = operatingSystem.getSystemBootTime();
         String date = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date(timestamp*1000));
