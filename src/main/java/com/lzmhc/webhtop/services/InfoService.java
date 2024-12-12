@@ -111,9 +111,17 @@ public class InfoService {
         }else{
             globalMemoryDto.setVirtualUsedMemory(String.format("%.2f", virtualUsedMemory)+" MB");
         }
-
         double virtualMemory=memory.getVirtualMemory().getSwapTotal()/1024.0/1024.0/1024.0;
         globalMemoryDto.setVirtuallMemory(String.format("%.2f", virtualMemory)+" GB");
+
+        Optional<PhysicalMemory> physicalMemoryOptional = memory.getPhysicalMemory().stream().findFirst();
+        if(physicalMemoryOptional.isPresent()){
+            globalMemoryDto.setRamTypeOrOsBitDepth(physicalMemoryOptional.get().getMemoryType());
+        }else{
+            globalMemoryDto.setRamTypeOrOsBitDepth(systemInfo.getOperatingSystem().getBitness()+" bit");
+        }
+        int processCount = systemInfo.getOperatingSystem().getProcessCount();
+        globalMemoryDto.setProcCount(processCount + ((processCount>1)? "Proces":"Proce"));
         return globalMemoryDto;
     }
     /**
