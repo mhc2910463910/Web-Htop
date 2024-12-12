@@ -199,7 +199,7 @@ public class InfoService {
                 powerDto.setName(powerSource.getName());
                 powerDto.setDeviceName(powerSource.getDeviceName());
                 DecimalFormat format=new DecimalFormat("#.00");
-                String voltage = format.format((powerSource.getVoltage()/1E6));
+                String voltage = format.format((powerSource.getVoltage()));
                 powerDto.setVoltage(voltage+" v");
                 powerDto.setPowerOnLine(powerSource.isPowerOnLine());
                 powerDto.setCharging(powerSource.isCharging());
